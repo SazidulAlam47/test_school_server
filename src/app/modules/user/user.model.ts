@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose';
 import { IUser } from './user.interface';
 import { UserRoles } from './user.constant';
+import { Steps } from '../testAttempt/testAttempt.constant';
+import { Levels } from '../question/question.constant';
 
 const userSchema = new Schema<IUser>(
     {
@@ -46,10 +48,11 @@ const userSchema = new Schema<IUser>(
         },
         certificationLevel: {
             type: String,
+            enum: Levels,
         },
         currentStep: {
             type: Number,
-            default: 1,
+            enum: Steps,
         },
     },
     {

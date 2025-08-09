@@ -20,7 +20,6 @@ const createSupervisor = async (payload: TCreateSupervisorPayload) => {
         isVerified: true,
         role: 'supervisor',
         needPasswordChange: true,
-        currentStep: 1,
     };
 
     // create the user

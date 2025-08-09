@@ -1,6 +1,8 @@
 import z from 'zod';
 import { UserRoles } from './user.constant';
 import { UserValidations } from './user.validation';
+import { TStep } from '../testAttempt/testAttempt.interface';
+import { TLevel } from '../question/question.interface';
 
 export type TUserRole = (typeof UserRoles)[number];
 
@@ -13,8 +15,8 @@ export interface IUser {
     otp?: string;
     otpExpiresAt?: number;
     needPasswordChange: boolean;
-    certificationLevel?: string;
-    currentStep?: number;
+    certificationLevel?: TLevel;
+    currentStep?: TStep;
 }
 
 export type TCreateSupervisorPayload = z.infer<

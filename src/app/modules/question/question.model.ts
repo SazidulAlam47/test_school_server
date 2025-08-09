@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IQuestion } from './question.interface';
-import { QuestionLevels, CorrectAnswers } from './question.constant';
+import { Levels, CorrectAnswers } from './question.constant';
 
 const questionSchema = new Schema<IQuestion>({
     text: {
@@ -18,7 +18,7 @@ const questionSchema = new Schema<IQuestion>({
     },
     level: {
         type: String,
-        enum: QuestionLevels,
+        enum: Levels,
         required: true,
     },
 });

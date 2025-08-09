@@ -11,7 +11,6 @@ const seedAdmin = async () => {
         email: 'admin@testschool.com',
         isVerified: true,
         needPasswordChange: false,
-        currentStep: 0,
         role: 'admin',
         password: hashedPassword,
     };

@@ -1,11 +1,11 @@
 import z from 'zod';
-import { CorrectAnswers, QuestionLevels } from './question.constant';
+import { Levels } from './question.constant';
 
 const createQuestion = z.object({
     text: z.string(),
     options: z.string().array(),
-    correctAnswer: z.union(CorrectAnswers.map((value) => z.literal(value))),
-    level: z.enum(QuestionLevels),
+    correctAnswer: z.number().min(0).max(3),
+    level: z.enum(Levels),
 });
 
 export const QuestionValidations = {
