@@ -135,7 +135,7 @@ const login = async (payload: TLoginPayload) => {
     );
 
     if (!isCorrectPassword) {
-        throw new ApiError(status.UNAUTHORIZED, 'Incorrect Password');
+        throw new ApiError(status.UNAUTHORIZED, 'Invalid credentials');
     }
 
     const jwtPayload = {
