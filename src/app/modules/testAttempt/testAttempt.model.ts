@@ -55,7 +55,7 @@ const testAttemptSchema = new Schema<ITestAttempt>(
         endTime: {
             type: Date,
             required: true,
-            default: () => new Date(Date.now() + 44 * 60 * 1000),
+            default: () => new Date(Date.now() + 46 * 60 * 1000),
         },
     },
     {

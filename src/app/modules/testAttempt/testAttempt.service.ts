@@ -6,6 +6,8 @@ import { TestAttempt } from './testAttempt.model';
 import { TSubmitAnswersPayload, TTestStatus } from './testAttempt.interface';
 import { Question } from '../question/question.model';
 import { TLevel } from '../question/question.interface';
+import generateCertificatePdf from '../../utils/generateCertificatePdf';
+import { Certificate } from '../certificate/certificate.model';
 
 const startTest = async (decodedUser: TDecodedUser) => {
     const user = await User.findOne({ email: decodedUser.email });
@@ -45,6 +47,12 @@ const submitAnswers = async (
 
     if (!testAttempt) {
         throw new ApiError(status.NOT_FOUND, 'Test attempt not found');
+    }
+
+    const user = await User.findById(testAttempt.userId);
+
+    if (!user) {
+        throw new ApiError(status.NOT_FOUND, 'User not found');
     }
 
     // check if the time is over
@@ -131,7 +139,20 @@ const submitAnswers = async (
             currentStep: nextStep,
             certifiedLevel,
         });
-    } else if (certifiedLevel) {
+    } else if (testStatus === 'completed') {
+        const issuedAt = new Date();
+        const certificatePath = await generateCertificatePdf(
+            user.name,
+            certifiedLevel!,
+            issuedAt,
+        );
+        await Certificate.create({
+            userId: testAttempt.userId,
+            certifiedLevel,
+            issuedAt,
+            certificatePath,
+        });
+
         await User.findByIdAndUpdate(testAttempt.userId, {
             certifiedLevel,
         });
