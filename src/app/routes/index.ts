@@ -3,6 +3,7 @@ import { UserRoutes } from '../modules/user/user.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { QuestionRoutes } from '../modules/question/question.route';
 import { CertificateRoutes } from '../modules/certificate/certificate.route';
+import { TestAttemptRoutes } from '../modules/testAttempt/testAttempt.route';
 
 const router = Router();
 
@@ -18,6 +19,10 @@ const moduleRoutes = [
     {
         path: '/questions',
         route: QuestionRoutes,
+    },
+    {
+        path: '/test-attempts',
+        route: TestAttemptRoutes,
     },
     {
         path: '/certificates',

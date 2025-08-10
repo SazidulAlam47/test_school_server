@@ -5,7 +5,7 @@ const submitAnswers = z.object({
         .array(
             z.object({
                 questionId: z.string(),
-                selectedOption: z.number().min(0).max(3),
+                selectedOption: z.number().min(0).max(3).optional(),
             }),
         )
         .min(1, 'At least one answer is required'),

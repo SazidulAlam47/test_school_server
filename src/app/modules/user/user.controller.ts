@@ -12,6 +12,16 @@ const createSupervisor = catchAsync(async (req, res) => {
     });
 });
 
+const getMe = catchAsync(async (req, res) => {
+    const result = await UserServices.getMe(req.user);
+    sendResponse(res, {
+        statusCode: status.OK,
+        message: 'User retrieved successfully',
+        data: result,
+    });
+});
+
 export const UserControllers = {
     createSupervisor,
+    getMe,
 };

@@ -6,6 +6,8 @@ import validateRequest from '../../middlewares/validateRequest';
 
 const router = express.Router();
 
+router.get('/me', auth(), UserControllers.getMe);
+
 router.post(
     '/create-supervisor',
     auth('admin'),

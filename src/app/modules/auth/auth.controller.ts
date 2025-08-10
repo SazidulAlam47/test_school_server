@@ -44,7 +44,7 @@ const login = catchAsync(async (req, res) => {
     });
 });
 
-const logoutUser = catchAsync(async (req, res) => {
+const logout = catchAsync(async (req, res) => {
     res.clearCookie('refreshToken', {
         secure: config.NODE_ENV === 'production',
         httpOnly: true,
@@ -99,7 +99,7 @@ export const AuthControllers = {
     registerStudent,
     verifyEmail,
     login,
-    logoutUser,
+    logout,
     changePassword,
     refreshToken,
     forgetPassword,

@@ -181,7 +181,19 @@ const submitAnswers = async (
     return result;
 };
 
+const getMyAttempts = async (decodedUser: TDecodedUser) => {
+    const user = await User.findOne({ email: decodedUser.email }).select('_id');
+
+    if (!user) {
+        throw new ApiError(status.NOT_FOUND, 'User not found');
+    }
+
+    const attempts = await TestAttempt.find({ userId: user._id });
+    return attempts;
+};
+
 export const TestAttemptServices = {
     startTest,
     submitAnswers,
+    getMyAttempts,
 };

@@ -3,6 +3,7 @@ import ApiError from '../../errors/ApiError';
 import { IUser, TCreateSupervisorPayload } from './user.interface';
 import { User } from './user.model';
 import { hashPassword } from '../../utils/bcrypt';
+import { TDecodedUser } from '../../interface/jwt.interface';
 
 const createSupervisor = async (payload: TCreateSupervisorPayload) => {
     const isUserExists = await User.findOne({ email: payload.email });
@@ -30,6 +31,12 @@ const createSupervisor = async (payload: TCreateSupervisorPayload) => {
     return userResponse;
 };
 
+const getMe = async (decodedUser: TDecodedUser) => {
+    const user = await User.findOne({ email: decodedUser.email });
+    return user;
+};
+
 export const UserServices = {
     createSupervisor,
+    getMe,
 };
