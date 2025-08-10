@@ -5,22 +5,17 @@ import sendResponse from '../../utils/sendResponse';
 import { CertificateServices } from './certificate.service';
 
 const getUserCertificate = catchAsync(async (req: Request, res: Response) => {
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-    const result = await CertificateServices.getUserCertificate(
-        req.user,
-        baseUrl,
-    );
+    const result = await CertificateServices.getUserCertificate(req.user);
 
     sendResponse(res, {
         statusCode: status.OK,
-        message: 'Certificate retrieved successfully',
+        message: 'Certificate has sent to your email',
         data: result,
     });
 });
 
 const getAllCertificates = catchAsync(async (req: Request, res: Response) => {
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-    const result = await CertificateServices.getAllCertificates(baseUrl);
+    const result = await CertificateServices.getAllCertificates();
 
     sendResponse(res, {
         statusCode: status.OK,

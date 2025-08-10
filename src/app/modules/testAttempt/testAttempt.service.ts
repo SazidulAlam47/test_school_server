@@ -7,6 +7,7 @@ import { TSubmitAnswersPayload, TTestStatus } from './testAttempt.interface';
 import { Question } from '../question/question.model';
 import { TLevel } from '../question/question.interface';
 import generateCertificatePdf from '../../utils/generateCertificatePdf';
+import sendCertificateEmail from '../../utils/sendCertificateEmail';
 import { Certificate } from '../certificate/certificate.model';
 
 const startTest = async (decodedUser: TDecodedUser) => {
@@ -141,17 +142,25 @@ const submitAnswers = async (
         });
     } else if (testStatus === 'completed') {
         const issuedAt = new Date();
-        const certificatePath = await generateCertificatePdf(
+        const certificatePdfBuffer = await generateCertificatePdf(
             user.name,
             certifiedLevel!,
             issuedAt,
         );
+
         await Certificate.create({
             userId: testAttempt.userId,
-            certifiedLevel,
+            level: certifiedLevel,
             issuedAt,
-            certificatePath,
         });
+
+        // Send certificate via email
+        await sendCertificateEmail(
+            user.email,
+            user.name,
+            certifiedLevel!,
+            certificatePdfBuffer,
+        );
 
         await User.findByIdAndUpdate(testAttempt.userId, {
             certifiedLevel,

@@ -5,5 +5,4 @@ export interface TCertificate {
     userId: Types.ObjectId;
     level: TLevel;
     issuedAt: Date;
-    certificatePath: string;
 }

@@ -1,34 +1,28 @@
 import { TLevel } from '../modules/question/question.interface';
 import PDFDocument from 'pdfkit';
-import fs from 'fs';
-import path from 'path';
 
 const generateCertificatePdf = (
     name: string,
     certifiedLevel: TLevel,
     issuedAt: Date,
-): Promise<string> => {
+): Promise<Buffer> => {
     return new Promise((resolve, reject) => {
         try {
-            const projectRoot = process.cwd();
-            const certificatesDir = path.join(projectRoot, 'certificates');
-
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            const sanitizedName = name.replace(/[^a-zA-Z0-9]/g, '_');
-            const filename = `certificate_${sanitizedName}_${certifiedLevel}_${timestamp}.pdf`;
-            const filePath = path.join(certificatesDir, filename);
-
             const doc = new PDFDocument({
                 size: 'A4',
                 layout: 'landscape',
                 margin: 50,
             });
 
-            doc.pipe(fs.createWriteStream(filePath));
+            const buffers: Buffer[] = [];
+
+            doc.on('data', (chunk) => {
+                buffers.push(chunk);
+            });
 
             doc.on('end', () => {
-                const relativePath = path.relative(projectRoot, filePath);
-                resolve(`/${relativePath.replace(/\\/g, '/')}`);
+                const pdfBuffer = Buffer.concat(buffers);
+                resolve(pdfBuffer);
             });
 
             doc.on('error', (error) => {

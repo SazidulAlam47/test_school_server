@@ -20,10 +20,6 @@ const certificateSchema = new Schema<TCertificate>(
             required: true,
             default: Date.now,
         },
-        certificatePath: {
-            type: String,
-            required: true,
-        },
     },
     {
         timestamps: true,
