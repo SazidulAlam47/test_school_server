@@ -15,8 +15,25 @@ const login = z.object({
     password: z.string(),
 });
 
+const changePassword = z.object({
+    oldPassword: z.string().min(1),
+    newPassword: z.string().min(6),
+});
+
+const forgetPassword = z.object({
+    email: z.string().email(),
+});
+
+const resetPassword = z.object({
+    id: z.string().min(1),
+    password: z.string().min(6),
+});
+
 export const AuthValidations = {
     registerStudent,
     verifyEmail,
     login,
+    changePassword,
+    forgetPassword,
+    resetPassword,
 };
