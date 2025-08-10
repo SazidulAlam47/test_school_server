@@ -4,6 +4,11 @@ import { TestAttemptControllers } from './testAttempt.controller';
 
 const router = express.Router();
 
-router.post('/start-test', auth('student'), TestAttemptControllers.startTest);
+router.post(
+    '/start-test',
+    auth('student'),
+
+    TestAttemptControllers.startTest,
+);
 
 export const TestAttemptRoutes = router;

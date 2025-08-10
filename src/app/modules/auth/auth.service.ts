@@ -104,7 +104,7 @@ const login = async (payload: TLoginPayload) => {
     );
 
     if (!user) {
-        throw new ApiError(status.UNAUTHORIZED, 'Invalid credentials');
+        throw new ApiError(status.NOT_FOUND, 'This email is not registered');
     }
 
     if (!user.isVerified) {
@@ -136,7 +136,7 @@ const login = async (payload: TLoginPayload) => {
     );
 
     if (!isCorrectPassword) {
-        throw new ApiError(status.UNAUTHORIZED, 'Invalid credentials');
+        throw new ApiError(status.FORBIDDEN, 'Wrong password');
     }
 
     const jwtPayload = {
@@ -183,7 +183,7 @@ const changePassword = async (
     );
 
     if (!isCorrectPassword) {
-        throw new ApiError(status.UNAUTHORIZED, 'Password did not matched');
+        throw new ApiError(status.FORBIDDEN, 'Password did not matched');
     }
 
     const newHashedPassword = await hashPassword(payload.newPassword);
