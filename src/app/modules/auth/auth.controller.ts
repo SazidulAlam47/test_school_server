@@ -14,7 +14,7 @@ const registerStudent = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-    const result = await AuthServices.verifyEmail(req.body);
+    const result = await AuthServices.verifyEmail(req.params.userId, req.body);
     sendResponse(res, {
         statusCode: status.OK,
         message: 'Email verified successfully',

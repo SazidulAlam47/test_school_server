@@ -7,7 +7,6 @@ const registerStudent = z.object({
 });
 
 const verifyEmail = z.object({
-    email: z.email(),
     otp: z.string(),
 });
 

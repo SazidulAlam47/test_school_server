@@ -53,10 +53,8 @@ const registerStudent = async (payload: TStudentRegisterPayload) => {
     return userResponse;
 };
 
-const verifyEmail = async (payload: TVerifyEmailPayload) => {
-    const user = await User.findOne({ email: payload.email }).select(
-        '+otp +otpExpiresAt',
-    );
+const verifyEmail = async (id: string, payload: TVerifyEmailPayload) => {
+    const user = await User.findById(id).select('+otp +otpExpiresAt');
 
     if (!user) {
         throw new ApiError(status.NOT_FOUND, 'User not found');

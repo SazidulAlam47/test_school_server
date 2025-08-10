@@ -11,7 +11,7 @@ router.post(
     AuthControllers.registerStudent,
 );
 router.post(
-    '/verify-email',
+    '/verify-email/:userId',
     validateRequest(AuthValidations.verifyEmail),
     AuthControllers.verifyEmail,
 );
